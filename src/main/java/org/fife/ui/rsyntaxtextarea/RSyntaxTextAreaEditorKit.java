@@ -441,7 +441,7 @@ public class RSyntaxTextAreaEditorKit extends RTextAreaEditorKit {
 						Token t = doc.getTokenListForLine(
 											rsta.getCaretLineNumber());
 						t = RSyntaxUtilities.getTokenAtOffset(t, dot-1);
-						if (t!=null && t.getType()==Token.MARKUP_TAG_DELIMITER) {
+						if (t!=null && t.getVisualType()==Token.MARKUP_TAG_DELIMITER) {
 							//System.out.println("Huzzah - closing tag!");
 							String tagName = discoverTagName(doc, dot);
 							if (tagName!=null) {
@@ -483,16 +483,16 @@ public class RSyntaxTextAreaEditorKit extends RTextAreaEditorKit {
 				Token t = doc.getTokenListForLine(i);
 				while (t!=null && t.isPaintable()) {
 
-					if (t.getType()==Token.MARKUP_TAG_DELIMITER) {
+					if (t.getVisualType()==Token.MARKUP_TAG_DELIMITER) {
 						if (t.isSingleChar('<') || t.isSingleChar('[')) {
 							t = t.getNextToken();
 							while (t!=null && t.isPaintable()) {
-								if (t.getType()==Token.MARKUP_TAG_NAME ||
+								if (t.getVisualType()==Token.MARKUP_TAG_NAME ||
 										// Being lenient here and also checking
 										// for attributes, in case they
 										// (incorrectly) have whitespace between
 										// the '<' char and the element name.
-										t.getType()==Token.MARKUP_TAG_ATTRIBUTE) {
+										t.getVisualType()==Token.MARKUP_TAG_ATTRIBUTE) {
 									stack.push(t.getLexeme());
 									break;
 								}
@@ -1461,7 +1461,7 @@ public class RSyntaxTextAreaEditorKit extends RTextAreaEditorKit {
 				int languageIndex) {
 			int openCount = 0;
 			for (Token t : doc) {
-				if (t.getType()==Token.SEPARATOR && t.length()==1 &&
+				if (t.getVisualType()==Token.SEPARATOR && t.length()==1 &&
 						t.getLanguageIndex()==languageIndex) {
 					char ch = t.charAt(0);
 					if (ch=='{') {

@@ -291,6 +291,16 @@ public interface Token extends TokenTypes {
 	 * @see #setType(int)
 	 */
 	int getType();
+	
+	
+	/**
+	 * Returns the visual type of this token.
+	 *
+	 * @return The type of this token.
+	 * @see TokenTypes
+	 * @see #setType(int)
+	 */
+	int getVisualType();
 
 
 	/**
@@ -499,41 +509,6 @@ public interface Token extends TokenTypes {
 	 */
 	Rectangle listOffsetToView(RSyntaxTextArea textArea, TabExpander e,
 			int pos, int x0, Rectangle rect);
-
-
-	/**
-	 * Sets whether this token is a hyperlink.
-	 *
-	 * @param hyperlink Whether this token is a hyperlink.
-	 * @see #isHyperlink()
-	 */
-	void setHyperlink(boolean hyperlink);
-
-
-	/**
-	 * Sets the language index for this token.  If this value is positive, it
-	 * denotes a specific "secondary" language this token represents (such as
-	 * JavaScript code or CSS embedded in an HTML file).  If this value is
-	 * <code>0</code>, this token is in the "main" language being edited.
-	 * Negative values are invalid and treated as <code>0</code>.
-	 *
-	 * @param languageIndex The new language index.  A value of
-	 *        <code>0</code> denotes the "main" language, any positive value
-	 *        denotes a specific secondary language.  Negative values will
-	 *        be treated as <code>0</code>.
-	 * @see #getLanguageIndex()
-	 */
-	void setLanguageIndex(int languageIndex);
-
-
-	/**
-	 * Sets the type of this token.
-	 *
-	 * @param type The new token type.
-	 * @see TokenTypes
-	 * @see #getType()
-	 */
-	void setType(int type);
 
 
 	/**

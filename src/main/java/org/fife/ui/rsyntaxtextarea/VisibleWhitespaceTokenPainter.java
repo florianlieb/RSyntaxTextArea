@@ -66,8 +66,8 @@ class VisibleWhitespaceTokenPainter extends DefaultTokenPainter {
 		Color fg = useSTC ? host.getSelectedTextColor() :
 			host.getForegroundForToken(token);
 		Color bg = selected ? null : host.getBackgroundForToken(token);
-		g.setFont(host.getFontForTokenType(token.getType()));
-		FontMetrics fm = host.getFontMetricsForTokenType(token.getType());
+		g.setFont(host.getFontForTokenType(token.getVisualType()));
+		FontMetrics fm = host.getFontMetricsForTokenType(token.getVisualType());
 
 		int ascent = fm.getAscent();
 		int height = fm.getHeight();

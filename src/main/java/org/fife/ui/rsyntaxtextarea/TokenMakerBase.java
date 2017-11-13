@@ -66,10 +66,11 @@ public abstract class TokenMakerBase implements TokenMaker {
 	}
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
+    /**
+     * Adds a null token to the end of the current linked list of tokens.
+     * This should be put at the end of the linked list whenever the last
+     * token on the current line is NOT a multi-line token.
+     */
 	public void addNullToken() {
 		if (firstToken==null) {
 			firstToken = tokenFactory.createToken();
@@ -101,10 +102,16 @@ public abstract class TokenMakerBase implements TokenMaker {
 	}
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
+    /**
+     * Adds the token specified to the current linked list of tokens.
+     *
+     * @param array The character array from which to get the text.
+     * @param start Start offset in <code>segment</code> of token.
+     * @param end End offset in <code>segment</code> of token.
+     * @param tokenType The token's type.
+     * @param startOffset The offset in the document at which this token
+     *        occurs.
+     */
 	public void addToken(char[] array, int start, int end, int tokenType,
 						int startOffset) {
 		addToken(array, start, end, tokenType, startOffset, false);

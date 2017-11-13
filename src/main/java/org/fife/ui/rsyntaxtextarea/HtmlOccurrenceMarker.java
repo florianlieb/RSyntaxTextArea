@@ -167,7 +167,7 @@ public class HtmlOccurrenceMarker implements OccurrenceMarker {
 		Token toMark = null;
 
 		while (t!=null && t.isPaintable()) {
-			if (t.getType()==Token.MARKUP_TAG_NAME) {
+			if (t.getVisualType()==Token.MARKUP_TAG_NAME) {
 				toMark = t;
 			}
 			// Check for the token containing the caret before checking
@@ -176,14 +176,14 @@ public class HtmlOccurrenceMarker implements OccurrenceMarker {
 				// Some languages, like PHP, mark functions/variables (PHP,
 				// JavaScirpt) as well as HTML tags.
 				if (occurrenceMarker.isValidType(textArea, t) &&
-						t.getType()!=Token.MARKUP_TAG_NAME) {
+						t.getVisualType()!=Token.MARKUP_TAG_NAME) {
 					return t;
 				}
 				if (t.containsPosition(dot)) {
 					break;
 				}
 			}
-			if (t.getType()==Token.MARKUP_TAG_DELIMITER) {
+			if (t.getVisualType()==Token.MARKUP_TAG_DELIMITER) {
 				if (t.isSingleChar('>') || t.is(TAG_SELF_CLOSE)) {
 					toMark = null;
 				}

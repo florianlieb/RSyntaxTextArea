@@ -145,8 +145,8 @@ public class TokenImpl implements Token {
 								boolean tabsToSpaces) {
 
 		SyntaxScheme colorScheme = textArea.getSyntaxScheme();
-		Style scheme = colorScheme.getStyle(getType());
-		Font font = textArea.getFontForTokenType(getType());//scheme.font;
+		Style scheme = colorScheme.getStyle(getVisualType());
+		Font font = textArea.getFontForTokenType(getVisualType());//scheme.font;
 
 		if (font.isBold()) {
 			sb.append("<b>");
@@ -408,7 +408,7 @@ public class TokenImpl implements Token {
 		Token last = null;
 
 		for (Token t=this; t!=null && t.isPaintable(); t=t.getNextToken()) {
-			switch (t.getType()) {
+			switch (t.getVisualType()) {
 				case COMMENT_DOCUMENTATION:
 				case COMMENT_EOL:
 				case COMMENT_MULTILINE:
@@ -465,7 +465,7 @@ public class TokenImpl implements Token {
 
 		while (token != null && token.isPaintable()) {
 
-			fm = textArea.getFontMetricsForTokenType(token.getType());
+			fm = textArea.getFontMetricsForTokenType(token.getVisualType());
 			char[] text = token.text;
 			int start = token.textOffset;
 			int end = start + token.textCount;
@@ -516,7 +516,7 @@ public class TokenImpl implements Token {
 	public int getOffsetBeforeX(RSyntaxTextArea textArea, TabExpander e,
 							float startX, float endBeforeX) {
 
-		FontMetrics fm = textArea.getFontMetricsForTokenType(getType());
+		FontMetrics fm = textArea.getFontMetricsForTokenType(getVisualType());
 		int i = textOffset;
 		int stop = i + textCount;
 		float x = startX;
@@ -560,6 +560,12 @@ public class TokenImpl implements Token {
 	public int getType() {
 		return type;
 	}
+	
+	
+	@Override
+	public int getVisualType() {
+	    return type % MAX_VISUAL_TOKEN_TYPES;
+	}
 
 
 	@Override
@@ -572,7 +578,7 @@ public class TokenImpl implements Token {
 	public float getWidthUpTo(int numChars, RSyntaxTextArea textArea,
 			TabExpander e, float x0) {
 		float width = x0;
-		FontMetrics fm = textArea.getFontMetricsForTokenType(getType());
+		FontMetrics fm = textArea.getFontMetricsForTokenType(getVisualType());
 		if (fm != null) {
 			int w;
 			int currentStart = textOffset;
@@ -644,7 +650,7 @@ public class TokenImpl implements Token {
 
 	@Override
 	public boolean isComment() {
-		return getType()>=Token.COMMENT_EOL && getType()<=Token.COMMENT_MARKUP;
+		return getVisualType()>=Token.COMMENT_EOL && getVisualType()<=Token.COMMENT_MARKUP;
 	}
 
 
@@ -662,25 +668,25 @@ public class TokenImpl implements Token {
 
 	@Override
 	public boolean isIdentifier() {
-		return getType()==IDENTIFIER;
+		return getVisualType()==IDENTIFIER;
 	}
 
 
 	@Override
 	public boolean isLeftCurly() {
-		return getType()==SEPARATOR && isSingleChar('{');
+		return getVisualType()==SEPARATOR && isSingleChar('{');
 	}
 
 
 	@Override
 	public boolean isRightCurly() {
-		return getType()==SEPARATOR && isSingleChar('}');
+		return getVisualType()==SEPARATOR && isSingleChar('}');
 	}
 
 
 	@Override
 	public boolean isPaintable() {
-		return getType()>Token.NULL;
+		return getVisualType()>Token.NULL;
 	}
 
 
@@ -692,13 +698,13 @@ public class TokenImpl implements Token {
 
 	@Override
 	public boolean isSingleChar(int type, char ch) {
-		return this.getType()==type && isSingleChar(ch);
+		return this.getVisualType()==type && isSingleChar(ch);
 	}
 
 
 	@Override
 	public boolean isWhitespace() {
-		return getType()==WHITESPACE;
+		return getVisualType()==WHITESPACE;
 	}
 
 
@@ -719,7 +725,7 @@ public class TokenImpl implements Token {
 
 		while (token != null && token.isPaintable()) {
 
-			fm = textArea.getFontMetricsForTokenType(token.getType());
+			fm = textArea.getFontMetricsForTokenType(token.getVisualType());
 			if (fm == null) {
 				return rect; // Don't return null as things'll error.
 			}
@@ -857,7 +863,6 @@ public class TokenImpl implements Token {
 	 * @param hyperlink Whether this token is a hyperlink.
 	 * @see #isHyperlink()
 	 */
-	@Override
 	public void setHyperlink(boolean hyperlink) {
 		this.hyperlink = hyperlink;
 	}
@@ -876,7 +881,6 @@ public class TokenImpl implements Token {
 	 *        be treated as <code>0</code>.
 	 * @see #getLanguageIndex()
 	 */
-	@Override
 	public void setLanguageIndex(int languageIndex) {
 		this.languageIndex = languageIndex;
 	}
@@ -905,10 +909,13 @@ public class TokenImpl implements Token {
 	}
 
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
+    /**
+     * Sets the type of this token.
+     *
+     * @param type The new token type.
+     * @see TokenTypes
+     * @see #getType()
+     */
 	public void setType(int type) {
 		this.type = type;
 	}

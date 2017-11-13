@@ -658,7 +658,7 @@ private boolean fractionalFontMetricsEnabled;
 					gen.appendNewline();
 				}
 				else {
-					Font font = getFontForTokenType(t.getType());
+					Font font = getFontForTokenType(t.getVisualType());
 					Color bg = getBackgroundForToken(t);
 					boolean underline = getUnderlineForToken(t);
 					// Small optimization - don't print fg color if this
@@ -1014,7 +1014,7 @@ private boolean fractionalFontMetricsEnabled;
 			}
 		}
 		if (c==null) {
-			c = syntaxScheme.getStyle(token.getType()).background;
+			c = syntaxScheme.getStyle(token.getVisualType()).background;
 		}
 		// Don't default to this.getBackground(), as Tokens simply don't
 		// paint a background if they get a null Color.
@@ -1174,7 +1174,7 @@ private boolean fractionalFontMetricsEnabled;
 				(t.isHyperlink() || linkGeneratorResult!=null)) {
 			return hyperlinkFG;
 		}
-		return getForegroundForTokenType(t.getType());
+		return getForegroundForTokenType(t.getVisualType());
 	}
 
 
@@ -1871,7 +1871,7 @@ private boolean fractionalFontMetricsEnabled;
 				(t.isHyperlink() ||
 					(linkGeneratorResult!=null &&
 						linkGeneratorResult.getSourceOffset()==t.getOffset()))) ||
-				syntaxScheme.getStyle(t.getType()).underline;
+				syntaxScheme.getStyle(t.getVisualType()).underline;
 	}
 
 

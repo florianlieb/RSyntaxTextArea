@@ -321,7 +321,7 @@ public class HtmlFoldParser implements FoldParser {
 
 		do {
 
-			while (t!=null && t.getType()!=Token.MARKUP_TAG_DELIMITER) {
+			while (t!=null && t.getVisualType()!=Token.MARKUP_TAG_DELIMITER) {
 				t = t.getNextToken();
 			}
 

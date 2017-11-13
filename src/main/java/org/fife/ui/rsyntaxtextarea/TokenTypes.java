@@ -81,5 +81,7 @@ public interface TokenTypes {
 	int ERROR_CHAR						= 38;
 
 	int DEFAULT_NUM_TOKEN_TYPES = 39;
+	
+	int MAX_VISUAL_TOKEN_TYPES = 100;
 
 }

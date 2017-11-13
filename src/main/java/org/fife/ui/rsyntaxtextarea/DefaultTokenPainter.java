@@ -113,8 +113,8 @@ class DefaultTokenPainter implements TokenPainter {
 		Color fg = useSTC ? host.getSelectedTextColor() :
 			host.getForegroundForToken(token);
 		Color bg = selected ? null : host.getBackgroundForToken(token);
-		g.setFont(host.getFontForTokenType(token.getType()));
-		FontMetrics fm = host.getFontMetricsForTokenType(token.getType());
+		g.setFont(host.getFontForTokenType(token.getVisualType()));
+		FontMetrics fm = host.getFontMetricsForTokenType(token.getVisualType());
 
 		for (int i=textOffs; i<end; i++) {
 			switch (text[i]) {
@@ -217,7 +217,7 @@ java.awt.Rectangle r = host.getMatchRectangle();
 		// whitespace as identifiers for performance).  But we only paint tab
 		// lines for the leading whitespace in the token.  So, if this isn't a
 		// WHITESPACE token, figure out the leading whitespace's length.
-		if (token.getType()!=Token.WHITESPACE) {
+		if (token.getVisualType()!=Token.WHITESPACE) {
 			int offs = 0;
 			for (; offs<token.length(); offs++) {
 				if (!RSyntaxUtilities.isWhitespace(token.charAt(offs))) {
@@ -232,7 +232,7 @@ java.awt.Rectangle r = host.getMatchRectangle();
 		}
 
 		// Get the length of a tab.
-		FontMetrics fm = host.getFontMetricsForTokenType(token.getType());
+		FontMetrics fm = host.getFontMetricsForTokenType(token.getVisualType());
 		int tabSize = host.getTabSize();
 		if (tabBuf==null || tabBuf.length<tabSize) {
 			tabBuf = new char[tabSize];

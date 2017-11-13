@@ -235,7 +235,7 @@ return p + 1;
 		// If this line is an empty line, then the token list is simply a
 		// null token.  In this case, the line highlight will be skipped in
 		// the loop below, so unfortunately we must manually do it here.
-		if (token!=null && token.getType()==Token.NULL) {
+		if (token!=null && token.getVisualType()==Token.NULL) {
 			h.paintLayeredHighlights(g, p0,p1, r, host, this);
 			return;
 		}
@@ -320,7 +320,7 @@ return p + 1;
 		// If this line is an empty line, then the token list is simply a
 		// null token.  In this case, the line highlight will be skipped in
 		// the loop below, so unfortunately we must manually do it here.
-		if (token!=null && token.getType()==Token.NULL) {
+		if (token!=null && token.getVisualType()==Token.NULL) {
 			h.paintLayeredHighlights(g, p0,p1, r, host, this);
 			return;
 		}
@@ -402,7 +402,6 @@ return p + 1;
 				Token orig = token;
 				token = new TokenImpl(drawSeg, tokenOffset-start, p-1-start,
 						tokenOffset, token.getType(), token.getLanguageIndex());
-				token.setLanguageIndex(token.getLanguageIndex());
 
 				// Selection starts in this token
 				if (token.containsPosition(selStart)) {
